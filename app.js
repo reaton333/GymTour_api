@@ -71,6 +71,7 @@ app.get('/gyms/:id', (req, res)  => {
       console.log("###########")
       console.log("###########Begin Error message: ")
       console.log(err)
+      res.sendStatus(500)
       res.send("There was an error with the query!")
       res.end()
     } else {  
