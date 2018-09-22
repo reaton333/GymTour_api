@@ -12,19 +12,24 @@ const mysql        = require('mysql')
 // combined
 app.use(morgan('combined'))
 
+// lets see how to start refactoring our code
+// ill shoow you how to use something called a router
+
+const router = express.Router()
+router.get('/equipment', (req, res) => {
+  console.log("####Show some messages...")
+  res.end()
+})
+
+app.use(router)
+
 // Select all gyms query
 app.get('/gyms', (req, res)  => {
 
   console.log("Fetching all gyms in db!")
   const queryString = "SELECT * FROM gyms"
 
-  const connection = mysql.createConnection({
-
-    host: 'localhost',
-    user: 'root',
-    password: 'Gamecock123@',
-    database: 'gym_tour_db'
-  })
+  const connection = getConnection()
 
   connection.query(queryString, (err, rows, fields) => {
 
@@ -53,13 +58,7 @@ app.get('/gyms/:id', (req, res)  => {
   console.log("Searching for gyms with id: " + req.params.id)
   const queryString = "SELECT * FROM gyms WHERE gyms.id = ?"
 
-  const connection = mysql.createConnection({
-
-    host: 'localhost',
-    user: 'root',
-    password: 'Gamecock123@',
-    database: 'gym_tour_db'
-  })
+  const connection = getConnection()
 
   const gymId = req.params.id
   connection.query(queryString, [gymId], (err, rows, fields) => {
@@ -91,6 +90,18 @@ app.get('/gyms/:id', (req, res)  => {
   // need to not close the response until we are doing querying
   //res.end()
 })
+
+// separate getConnection function so we don't
+// have to recall it a million times!!!!
+function getConnection() {
+  return mysql.createConnection({
+
+    host: 'localhost',
+    user: 'root',
+    password: 'Gamecock123@',
+    database: 'gym_tour_db'
+  })
+}
 
 // specify root directory
 // route #1
