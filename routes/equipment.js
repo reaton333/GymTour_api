@@ -4,12 +4,13 @@ const express      = require('express')
 const mysql        = require('mysql')
 const router       = express.Router()
 
-// Select all gyms
-router.get('/gyms', (req, res)  => {
 
-    console.log("Fetching all gyms in db!")
+// Select all equipment
+router.get('/equipment', (req, res)  => {
 
-    const queryString = "SELECT * FROM gyms"
+    console.log("Fetching all equipment in db!")
+
+    const queryString = "SELECT * FROM equipment"
     const connection = getConnection()
   
     connection.query(queryString, (err, rows, fields) => {
@@ -29,16 +30,16 @@ router.get('/gyms', (req, res)  => {
     //res.end()
 })
 
-// Select gym by id
-router.get('/gyms/:id', (req, res)  => {
+// Select equipment by id
+router.get('/equipment/:id', (req, res)  => {
 
-    console.log("Searching for gyms with id: " + req.params.id)
-    const queryString = "SELECT * FROM gyms WHERE gyms.id = ?"
+    console.log("Searching for equipment with id: " + req.params.id)
+    const queryString = "SELECT * FROM equipment WHERE equipment.id = ?"
   
     const connection = getConnection()
   
-    const gymId = req.params.id
-    connection.query(queryString, [gymId], (err, rows, fields) => {
+    const equipmentId = req.params.id
+    connection.query(queryString, [equipmentId], (err, rows, fields) => {
   
       if (err) {
 
@@ -52,7 +53,7 @@ router.get('/gyms/:id', (req, res)  => {
         // No error, we have data!!!
         if (rows.length < 1) {
   
-          res.send("No gyms found by that id!")
+          res.send("No equipment found by that id!")
           res.end()
         } else {
           res.json(rows)
@@ -63,6 +64,7 @@ router.get('/gyms/:id', (req, res)  => {
     // need to not close the response until we are doing querying
     //res.end()
   })
+
 
 // separate getConnection function so we don't
 // have to recall it a million times!!!!
