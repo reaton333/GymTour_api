@@ -1,0 +1,16 @@
+{
+  "name": "gymtourapi",
+  "version": "1.0.0",
+  "description": "A simple node api that connects to the gymtour mysql db",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Ross Eaton & Ken Jones",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.16.3",
+    "morgan": "^1.9.1",
+    "mysql": "^2.16.0"
+  }
+}
