@@ -64,17 +64,23 @@ router.get('/gyms/:id', (req, res)  => {
     //res.end()
   })
 
+
+// creating connection pool!
+// if you have too many connections running
+// at once you can see issues, a pool solves this
+const pool = mysql.createPool({
+    connectionLimit: 10,  // might need to tweak this later
+    host: 'localhost',
+    user: 'root',
+    password: 'Gamecock123@',
+    database: 'gym_tour_db'
+})
+
 // separate getConnection function so we don't
 // have to recall it a million times!!!!
 function getConnection() {
-    return mysql.createConnection({
-  
-      host: 'localhost',
-      user: 'root',
-      password: 'Gamecock123@',
-      database: 'gym_tour_db'
-    })
-  }
+    return pool
+}
 
 // Exports this router out of the current file!
 module.exports = router
